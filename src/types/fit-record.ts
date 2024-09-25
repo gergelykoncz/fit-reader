@@ -14,10 +14,11 @@ export interface FitDefinitionMessageField {
 export interface FitDefinitionMessage {
   architecture: Architecture;
   globalMessageNumber: number;
-  fields: number;
+  numberOfFields: number;
   fieldDefinitions: FitDefinitionMessageField[];
   developerFields: number;
   developerFieldDefinitions: [];
+  length: number;
 }
 
 export interface FitRecord {
