@@ -1,7 +1,7 @@
-import { parseHeader } from "./header-parser";
+import { parseFileHeader } from "./file-header-parser";
 
-describe("header-parser", () => {
-  describe("parseHeader", () => {
+describe("file-header-parser", () => {
+  describe("parseFileHeader", () => {
     it("should parse the standard FIT header", () => {
       const buffer = Buffer.alloc(14);
       buffer.writeUInt8(14, 0); // Header size
@@ -11,7 +11,7 @@ describe("header-parser", () => {
       buffer.write(".FIT", 8); // Data type
       buffer.writeUInt16LE(123, 12); // CRC
 
-      const result = parseHeader(buffer);
+      const result = parseFileHeader(buffer);
 
       expect(result).toEqual([
         { name: "Header size", value: 14 },

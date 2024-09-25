@@ -1,5 +1,5 @@
-import { decodeFourBytes, decodeTwoBytes } from "./byte-helpers";
-import { HeaderField, NameValuePair } from "./types";
+import { decodeFourBytes, decodeTwoBytes } from "../utils";
+import { Architecture, HeaderField, NameValuePair } from "../types";
 
 const HEADER_LAYOUT: HeaderField[] = [
   { start: 0, end: 1, type: "uint8", name: "Header size" },
@@ -10,7 +10,9 @@ const HEADER_LAYOUT: HeaderField[] = [
   { start: 12, end: 14, type: "uint16", name: "Crc" },
 ];
 
-export const parseHeader = (data: Buffer): NameValuePair<string | number>[] => {
+export const parseFileHeader = (
+  data: Buffer
+): NameValuePair<string | number>[] => {
   return HEADER_LAYOUT.map((field: HeaderField) => {
     const { start, end, type, name } = field;
     const slice = data.subarray(start, end);
@@ -20,10 +22,10 @@ export const parseHeader = (data: Buffer): NameValuePair<string | number>[] => {
         value = slice[0];
         break;
       case "uint16":
-        value = decodeTwoBytes(slice);
+        value = decodeTwoBytes(slice, Architecture.LittleEndian);
         break;
       case "uint32":
-        value = decodeFourBytes(slice);
+        value = decodeFourBytes(slice, Architecture.LittleEndian);
         break;
       case "ascii":
         value = slice.toString();
