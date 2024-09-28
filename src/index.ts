@@ -14,7 +14,7 @@ readFile("./test/test.fit", (err, data) => {
       console.log("reading record at index", recordIndex);
       const record = parseRecord(data.subarray(recordIndex, data.length));
       console.log(record);
-      recordIndex += record.length;
+      recordIndex += record.length - 1;
     }
   }
 });
